@@ -54,3 +54,34 @@
     
     
 }
+.library .heading{
+    display: flex;
+    gap: 10px;
+    margin-left:5px;
+}
+.library{
+    min-height: 80vh;
+    position: relative;
+}
+
+.footer {
+    display: flex;
+    font-size: 8px;
+    color: grey;
+    gap: 11px;
+    position: absolute;
+    bottom: 0;
+    padding: 10px 0;
+
+}
+.footer a{
+    color: grey;
+}
+.right{
+    margin: 16px;
+    position: relative;
+}
+.header{
+    display: flex;
+    justify-content: space-around;
+}
