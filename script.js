@@ -35,7 +35,7 @@ function formatTime(seconds) {
 // Fetch album info from info.json
 async function getAlbumInfo(folder) {
     try {
-        let response = await fetch(`http://127.0.0.1:3000/songs/${folder}/info.json`);
+        let response = await fetch(`./songs/${folder}/info.json`);
         if (response.ok) {
             let info = await response.json();
             return info;
@@ -55,7 +55,7 @@ async function getAlbumInfo(folder) {
 
 async function getAlbumCover(folder) {
     try {
-        let coverUrl = `http://127.0.0.1:3000/songs/${folder}/cover.jpg`;
+        let coverUrl = `./songs/${folder}/cover.jpg`;
         let response = await fetch(coverUrl, { method: 'HEAD' });
         
         if (response.ok) {
@@ -71,7 +71,7 @@ async function getAlbumCover(folder) {
 // Get all albums/folders
 async function getAlbums() {
     try {
-        let response = await fetch(`http://127.0.0.1:3000/songs/`);
+        let response = await fetch(`./songs/`);
         let html = await response.text();
         
         let div = document.createElement("div");
@@ -108,7 +108,7 @@ async function getsongs(folder) {
     
         currentFolder = folder;
         
-        let url = folder ? `http://127.0.0.1:3000/songs/${folder}/` : `http://127.0.0.1:3000/songs/`;
+        let url = folder ? `./songs/${folder}/` : `./songs/`;
         
         let a = await fetch(url);
         let response = await a.text();
@@ -321,15 +321,25 @@ async function main() {
     });
 
     // Volume control
-    const volumeInput = document.querySelector('.range input');
-    if (volumeInput) {
-        volumeInput.addEventListener("input", (e) => {
-            currentsong.volume = e.target.value / 100;
-            if (currentsong.volume>0){
-                document.querySelector(".volume>img").src = document.querySelector(".volume>img")
-            }
-        });
-    }
+const volumeInput = document.querySelector('.range input');
+
+if (volumeInput) {
+    volumeInput.addEventListener("input", (e) => {
+        const vol = e.target.value;
+
+        currentsong.volume = vol / 100;
+
+        const volImg = document.querySelector(".volume>img");
+
+        // Change icon depending on volume
+        if (vol == 0) {
+            volImg.src = "img/mute.svg";
+        } else {
+            volImg.src = "img/volume.svg";
+        }
+    });
+}
+
     // to mute  the track
     document.querySelector(".volume>img").addEventListener("click",e=>{
         if(e.target.src.includes("volume.svg")){
